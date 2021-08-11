@@ -98,7 +98,7 @@ app.use(messageRouter);
 
 mongoose.connect(`mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.kpq9o.mongodb.net/${process.env.DB}?retryWrites=true&w=majority`)
     .then((result) => {
-        let server = app.listen(8080);
+        let server = app.listen(process.env.PORT || 8080);
         // setting up websockets
         let iocon = socketIO.init({
             httpServer: server,
