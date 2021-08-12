@@ -5,7 +5,7 @@ const isAuth = (req, res, next) => {
         let jwtTok = req.headers["authorization"];
         console.log(jwtTok)
         if(jwtTok){
-            jwtTok = jwtToken.split(" ")[1];
+            jwtTok = jwtTok.split(" ")[1];
         }
         let userData = jwt.verify(jwtTok, "secretismysecretnoneofyoursecret");
         console.log(userData);
