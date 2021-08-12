@@ -59,7 +59,7 @@ exports.loginHandler = async (req,res,next) => {
     res.cookie("jwtToken",jwtToken,{
         expires:new Date(Date.now() + 3600000),
         httpOnly:true,
-        domain:"herokuapp.com"
+        secure:true
     });
     return res.status(200).json({
         token:jwtToken,
