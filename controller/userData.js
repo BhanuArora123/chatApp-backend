@@ -128,7 +128,7 @@ exports.editUser = async (req, res, next) => {
     console.log(req.files);
     if (req.files.image) {
         filehelper(path.join(__dirname, "..", userData.profilePic));
-        profilePic = await mod.posixPath("http://localhost:8080/" + req.files.image[0].path);
+        profilePic = await mod.posixPath("https://chatappbackend12345.herokuapp.com/" + req.files.image[0].path);
         console.log(profilePic);
     }
     userData.name = name;

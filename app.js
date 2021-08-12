@@ -104,7 +104,7 @@ mongoose.connect(`mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0
             httpServer: server,
             corsSetup: {
                 cors: {
-                    origin: "http://localhost:8081",
+                    origin: "https://chatapp-client-12345.herokuapp.com",
                     methods: ["GET", "POST"],
                     allowedHeaders: ["Content-Type"]
                 }

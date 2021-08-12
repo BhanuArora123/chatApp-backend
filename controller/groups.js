@@ -48,10 +48,10 @@ exports.addGroup = async (req, res, next) => {
     console.log(req.files);
     if (req.files.groupIcon) {
         let mod = await _filePath;
-        groupIcon = await mod.posixPath("http://localhost:8080/" + req.files.groupIcon[0].path)
+        groupIcon = await mod.posixPath("https://chatappbackend12345.herokuapp.com/" + req.files.groupIcon[0].path)
     }
     if (!groupIcon) {
-        groupIcon = `http://localhost:8080/images/custom.jpg`
+        groupIcon = `https://chatappbackend12345.herokuapp.com//images/custom.jpg`
     }
     console.log(groupName)
     let groupData = new groups({
