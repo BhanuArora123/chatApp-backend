@@ -2,8 +2,11 @@ const jwt = require("jsonwebtoken");
 
 const isAuth = (req, res, next) => {
     try {
-        let jwtTok = req.cookies.jwtToken;
-        let userData = jwt.verify(jwtTok, "somesupersecret");
+        let jwtTok = req.headers["Authorization"];
+        if(jwtTok){
+            jwtTok = jwtToken.split(" ")[1];
+        }
+        let userData = jwt.verify(jwtTok, "secretismysecretnoneofyoursecret");
         console.log(userData);
         if (!userData) {
             return res.status(401).json({

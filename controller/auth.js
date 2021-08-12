@@ -55,7 +55,7 @@ exports.loginHandler = async (req,res,next) => {
     let jwtToken = jwt.sign({
         email:email,
         userId:userData._id
-    },"somesupersecret");
+    },"secretismysecretnoneofyoursecret");
     res.cookie("jwtToken",jwtToken,{
         expires:new Date(Date.now() + 3600000),
         httpOnly:true,
@@ -65,6 +65,7 @@ exports.loginHandler = async (req,res,next) => {
     return res.status(200).json({
         token:jwtToken,
         msg:"user created successfully",
+        token:jwtToken,
         status:200
     });
 }
