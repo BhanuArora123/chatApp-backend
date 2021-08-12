@@ -36,7 +36,7 @@ const userSchema = new schema({
     },
     profilePic: {
         type: String,
-        default: "http://localhost:8080/images/custom.jpg"
+        default: "https://chatappbackend12345.herokuapp.com/images/custom.jpg"
     },
     attachments: [
         {
