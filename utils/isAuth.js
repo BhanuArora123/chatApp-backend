@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const isAuth = (req, res, next) => {
     try {
-        let jwtTok = req.headers["Authorization"];
+        let jwtTok = req.headers["authorization"];
         console.log(jwtTok)
         if(jwtTok){
             jwtTok = jwtToken.split(" ")[1];
