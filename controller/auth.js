@@ -41,14 +41,18 @@ exports.loginHandler = async (req,res,next) => {
     let userData = await user.findOne({email:email});
     if(!userData){
         return res.status(404).json({
-            msg:["user not found signup"],
+            msg:[{
+                msg:"user not found signup"
+            }],
             status:404
         })
     }
     let result = await bcryptjs.compare(pass,userData.password);
     if(!result){
         return res.status(403).json({
-            msg:["invalid password"],
+            msg:[{
+                msg:"invalid password"
+            }],
             status:403
         });
     }
