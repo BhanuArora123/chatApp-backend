@@ -13,7 +13,7 @@ exports.signup = async (req, res, next) => {
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.json({
+        return res.status(422).json({
             msg: errors.array()
         })
     }
@@ -24,14 +24,13 @@ exports.signup = async (req, res, next) => {
         name: name
     });
     let userDoc = await userData.save();
-    return res.json({
+    return res.status(201).json({
         msg:"User successfully created"
     })
 }
 exports.loginHandler = async (req,res,next) => {
     const email = req.body.email;
     const pass = req.body.password;
-    console.log(email)
     let errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(422).json({
@@ -42,14 +41,14 @@ exports.loginHandler = async (req,res,next) => {
     let userData = await user.findOne({email:email});
     if(!userData){
         return res.status(404).json({
-            msg:"user not found signup",
+            msg:["user not found signup"],
             status:404
         })
     }
     let result = await bcryptjs.compare(pass,userData.password);
     if(!result){
         return res.status(403).json({
-            msg:"invalid password",
+            msg:["invalid password"],
             status:403
         });
     }
