@@ -38,6 +38,24 @@ const userSchema = new schema({
         type: String,
         default: "https://chatappbackend12345.herokuapp.com/images/custom.jpg"
     },
+    phone_number:{
+        type:Number
+    }
+    ,
+    otp:{
+        value:{
+            type:Number,
+            required:true
+        },
+        expires:{
+            type:Date,
+            required:true
+        }
+    },
+    isverified:{
+        type:Boolean,
+        default:false
+    },
     attachments: [
         {
             fileId: {

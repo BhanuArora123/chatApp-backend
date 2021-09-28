@@ -28,6 +28,16 @@ router.put("/signup",[
     .withMessage("the name must be atleast 3 characters long")
 ],authController.signup);
 
+router.post("/generateOTP",[
+    body("number")
+    .isNumeric()
+    .isLength(12)
+],
+authController.generateOTP
+)
+
+router.post("/verifyOTP",authController.verifyOTP);
+
 router.post("/login",[
     body("email")
     .isEmail()
