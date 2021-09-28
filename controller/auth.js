@@ -28,7 +28,8 @@ exports.signup = async (req, res, next) => {
     let userDoc = await userData.save();
     res.status(201).json({
         msg:"user Created successfully",
-        userId:userDoc._id
+        userId:userDoc._id,
+        status:201
     })
 }
 exports.loginHandler = async (req, res, next) => {
@@ -104,8 +105,8 @@ exports.generateOTP = (req, res, next) => {
         })
         .then((userDoc) => {
             const vonage = new Vonage({
-                apiKey: "",
-                apiSecret: ""
+                apiKey: process.env.apiKey,
+                apiSecret: process.env.apiSecret
             })
             const from = "Chit Chat Chat Web Application",
             const to = phn_no;
