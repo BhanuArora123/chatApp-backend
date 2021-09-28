@@ -108,7 +108,7 @@ exports.generateOTP = (req, res, next) => {
                 apiKey: process.env.apiKey,
                 apiSecret: process.env.apiSecret
             })
-            const from = "Chit Chat Chat Web Application",
+            const from = "Chit Chat Chat Web Application";
             const to = phn_no;
             const message = `use this otp ${otp} to login , code expires in 10 minutes`;
             vonage.message.sendSms(from, to, message, (err, responseData) => {
