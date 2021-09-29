@@ -137,7 +137,7 @@ exports.verifyOTP = (req,res,next) => {
         $and:[
             {
                 otp:{
-                    value:otp,
+                    value:parseInt(otp),
                     expires:{
                         $gt : new Date(Date.now())
                     }
