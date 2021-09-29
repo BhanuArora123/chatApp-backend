@@ -142,8 +142,12 @@ exports.verifyOTP = (req, res, next) => {
     console.log(timeNow);
     user.findOne({
         otp: {
-            value: parseInt(otp)
-        }
+            value: parseInt(otp),
+            expires: {
+                $gt: timeNow
+            }
+        },
+        _id:mongoose.Types.ObjectId(req.body.userId)
     })
         .then((userDoc) => {
             if (!userDoc) {
