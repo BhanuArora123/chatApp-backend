@@ -139,7 +139,7 @@ exports.verifyOTP = (req, res, next) => {
     console.log(req.body.userId)
     console.log(timeNow);
     user.findOne({
-        otp:parseInt(value),
+        otp:parseInt(otp),
         expires:{
             $gt:timeNow
         },
