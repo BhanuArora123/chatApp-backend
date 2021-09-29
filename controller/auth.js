@@ -28,9 +28,9 @@ exports.signup = async (req, res, next) => {
     });
     let userDoc = await userData.save();
     res.status(201).json({
-        msg:"user Created successfully",
-        userId:userDoc._id,
-        status:201
+        msg: "user Created successfully",
+        userId: userDoc._id,
+        status: 201
     })
 }
 exports.loginHandler = async (req, res, next) => {
@@ -61,9 +61,9 @@ exports.loginHandler = async (req, res, next) => {
             status: 403
         });
     }
-    if(!userData.isverified){
+    if (!userData.isverified) {
         return res.status(403).json({
-            msg:"user is not verified"
+            msg: "user is not verified"
         })
     }
     // generate jwt
@@ -89,9 +89,9 @@ exports.generateOTP = (req, res, next) => {
     let phn_no = req.body.number;
     let errors = validationResult(req);
     let otp;
-    if(!errors.isEmpty()){
+    if (!errors.isEmpty()) {
         return res.status(422).json({
-            msg:errors.array()
+            msg: errors.array()
         })
     }
     user.findById(userId)
@@ -125,48 +125,45 @@ exports.generateOTP = (req, res, next) => {
                 if (responseData.messages[0]['status'] === "0") {
                     return res.status(200).json({
                         msg: "Message sent successfully.",
-                        userId:req.body.userId
+                        userId: req.body.userId
                     })
-                } 
+                }
                 return res.status(424).json({
-                    msg:`Message failed with error: ${responseData.messages[0]['error-text']}`
+                    msg: `Message failed with error: ${responseData.messages[0]['error-text']}`
                 });
             })
         })
 }
-exports.verifyOTP = (req,res,next) => {
+exports.verifyOTP = (req, res, next) => {
     let otp = req.body.otp;
     console.log(otp);
     let timeNow = new Date().getTime();
-    console.log(req.body.userId);
+    console.log(req.body.userId)
     console.log(timeNow);
     user.findOne({
-        $and:[
-            {
-                otp:{
-                    value:parseInt(otp),
-                    expires:{
-                        $gt : timeNow
-                    }
-                }
+        otp: {
+            value: parseInt(otp),
+            expires: {
+                $gt: timeNow
             }
-        ]
+        },
+        _id:mongoose.Types.ObjectId(req.body.userId)
     })
-    .then((userDoc) => {
-        if(!userDoc){
-            throw new Error("invalid otp");
-        }
-        userDoc.isverified = true;
-        return userDoc.save();
-    })
-    .then(() => {
-        return res.status(200).json({
-            msg:"otp verified"
+        .then((userDoc) => {
+            if (!userDoc) {
+                throw new Error("invalid otp");
+            }
+            userDoc.isverified = true;
+            return userDoc.save();
         })
-    })
-    .catch(err => {
-        return res.status(401).json({
-            msg:err
+        .then(() => {
+            return res.status(200).json({
+                msg: "otp verified"
+            })
         })
-    })
+        .catch(err => {
+            return res.status(401).json({
+                msg: err
+            })
+        })
 }
