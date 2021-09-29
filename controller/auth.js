@@ -140,21 +140,28 @@ exports.verifyOTP = (req, res, next) => {
     let timeNow = new Date().getTime();
     console.log(req.body.userId)
     console.log(timeNow);
-    user.findOne({
-        otp: {
-            value: parseInt(otp),
-            expires: {
-                $gt: timeNow
+    user.aggregate([
+        {
+            $match: {
+                $and: [
+                    {
+                        otp: {
+                            value: parseInt(otp),
+                            expires: {
+                                $gt: timeNow
+                            }
+                        }
+                    }
+                ]
             }
-        },
-        _id:mongoose.Types.ObjectId(req.body.userId)
-    })
+        }
+    ])
         .then((userDoc) => {
             if (!userDoc) {
                 throw new Error("invalid otp");
             }
-            userDoc.isverified = true;
-            return userDoc.save();
+            userDoc[0].isverified = true;
+            return userDoc[0].save();
         })
         .then(() => {
             return res.status(200).json({
