@@ -138,6 +138,7 @@ exports.verifyOTP = (req,res,next) => {
     let otp = req.body.otp;
     console.log(otp);
     let timeNow = new Date().getTime();
+    console.log(req.body.userId);
     console.log(timeNow);
     user.findOne({
         $and:[
@@ -148,9 +149,6 @@ exports.verifyOTP = (req,res,next) => {
                         $gt : timeNow
                     }
                 }
-            },
-            {
-                _id:mongoose.Types.ObjectId(req.body.userId)
             }
         ]
     })
