@@ -136,13 +136,15 @@ exports.generateOTP = (req, res, next) => {
 exports.verifyOTP = (req,res,next) => {
     let otp = req.body.otp;
     console.log(otp);
+    let timeNow = new Date().getTime();
+    console.log(timeNow);
     user.findOne({
         $and:[
             {
                 otp:{
                     value:parseInt(otp),
                     expires:{
-                        $gt : new Date().getTime()
+                        $gt : timeNow
                     }
                 }
             },
