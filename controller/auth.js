@@ -87,6 +87,7 @@ exports.generateOTP = (req, res, next) => {
     let userId = req.body.userId;
     let phn_no = req.body.number;
     let errors = validationResult(req);
+    let otp;
     if(!errors.isEmpty()){
         return res.status(422).json({
             msg:errors.array()
@@ -96,7 +97,7 @@ exports.generateOTP = (req, res, next) => {
         .then((userData) => {
             let otp_part1 = Math.floor(1000 + Math.random() * 9000);
             let otp_part2 = Math.floor(1000 + Math.random() * 9000);
-            let otp = otp_part1 * 10000 + otp_part2;
+            otp = otp_part1 * 10000 + otp_part2;
             userData.otp = {
                 value: otp,
                 expires: new Date(Date.now() + 6000)
