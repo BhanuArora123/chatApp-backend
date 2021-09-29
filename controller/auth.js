@@ -101,10 +101,8 @@ exports.generateOTP = (req, res, next) => {
             let otp_part1 = Math.floor(1000 + Math.random() * 9000);
             let otp_part2 = Math.floor(1000 + Math.random() * 9000);
             otp = otp_part1 * 10000 + otp_part2;
-            userData.otp = {
-                value: otp,
-                expires: expires + 6000000
-            };
+            userData.otp =otp ;
+            userData.expires = expires + 6000000;
             return userData.save();
         })
         .then((userDoc) => {
@@ -140,28 +138,19 @@ exports.verifyOTP = (req, res, next) => {
     let timeNow = new Date().getTime();
     console.log(req.body.userId)
     console.log(timeNow);
-    user.aggregate([
-        {
-            $match: {
-                $and: [
-                    {
-                        otp: {
-                            value: parseInt(otp),
-                            expires: {
-                                $gt: timeNow
-                            }
-                        }
-                    }
-                ]
-            }
-        }
-    ])
+    user.findOne({
+        otp:parseInt(value),
+        expires:{
+            $gt:timeNow
+        },
+        _id:mongoose.Schema.Types.ObjectId(req.body.userId)
+    })
         .then((userDoc) => {
             if (!userDoc) {
                 throw new Error("invalid otp");
             }
-            userDoc[0].isverified = true;
-            return userDoc[0].save();
+            userDoc.isverified = true;
+            return userDoc.save();
         })
         .then(() => {
             return res.status(200).json({
