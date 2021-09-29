@@ -100,7 +100,7 @@ exports.generateOTP = (req, res, next) => {
             otp = otp_part1 * 10000 + otp_part2;
             userData.otp = {
                 value: otp,
-                expires: Date.now().getTime() + 6000000
+                expires: new Date().getTime() + 6000000
             };
             return userData.save();
         })
@@ -139,7 +139,7 @@ exports.verifyOTP = (req,res,next) => {
                 otp:{
                     value:parseInt(otp),
                     expires:{
-                        $gt : Date.now().getTime()
+                        $gt : new Date().getTime()
                     }
                 }
             },

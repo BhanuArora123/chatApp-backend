@@ -47,7 +47,7 @@ const userSchema = new schema({
             type:Number
         },
         expires:{
-            type:Date
+            type:Number
         }
     },
     isverified:{
