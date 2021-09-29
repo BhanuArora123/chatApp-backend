@@ -6,6 +6,7 @@ const { validationResult } = require("express-validator/check");
 const jwt = require("jsonwebtoken");
 
 const Vonage = require('@vonage/server-sdk');
+const mongoose = require("mongoose");
 
 exports.signup = async (req, res, next) => {
     const email = req.body.email;
@@ -149,7 +150,7 @@ exports.verifyOTP = (req,res,next) => {
                 }
             },
             {
-                _id:req.body.userId
+                _id:mongoose.Types.ObjectId(req.body.userId)
             }
         ]
     })
