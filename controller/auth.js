@@ -143,6 +143,7 @@ exports.verifyOTP = (req, res, next) => {
     user.findOne({
         otp: {
             value: parseInt(otp)
+        }
     })
         .then((userDoc) => {
             if (!userDoc) {
