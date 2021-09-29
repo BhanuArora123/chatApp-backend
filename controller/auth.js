@@ -142,11 +142,7 @@ exports.verifyOTP = (req, res, next) => {
     console.log(timeNow);
     user.findOne({
         otp: {
-            value: parseInt(otp),
-            expires: {
-                $gt: timeNow
-            }
-        }
+            value: parseInt(otp)
     })
         .then((userDoc) => {
             if (!userDoc) {
