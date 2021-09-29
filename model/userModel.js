@@ -44,12 +44,10 @@ const userSchema = new schema({
     ,
     otp:{
         value:{
-            type:Number,
-            required:true
+            type:Number
         },
         expires:{
-            type:Date,
-            required:true
+            type:Date
         }
     },
     isverified:{
