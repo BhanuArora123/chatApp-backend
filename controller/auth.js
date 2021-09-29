@@ -109,8 +109,8 @@ exports.generateOTP = (req, res, next) => {
                 apiKey: process.env.apiKey,
                 apiSecret: process.env.apiSecret
             })
-            const from = "Chit Chat Chat Web Application";
-            const to = phn_no;
+            const from = "Vonage APIs";
+            const to = (phn_no).toString();
             const message = `use this otp ${otp} to login , code expires in 10 minutes`;
             vonage.message.sendSms(from, to, message, (err, responseData) => {
                 if (err) {
@@ -125,7 +125,7 @@ exports.generateOTP = (req, res, next) => {
                         userId:req.body.userId
                     })
                 } 
-                return res.status(200).json({
+                return res.status(424).json({
                     msg:`Message failed with error: ${responseData.messages[0]['error-text']}`
                 });
             })
