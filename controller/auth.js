@@ -149,7 +149,7 @@ exports.verifyOTP = (req,res,next) => {
                 }
             },
             {
-                userId:req.body.userId
+                _id:req.body.userId
             }
         ]
     })
