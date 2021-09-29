@@ -143,7 +143,7 @@ exports.verifyOTP = (req, res, next) => {
         expires:{
             $gt:timeNow
         },
-        _id:mongoose.Schema.Types.ObjectId(req.body.userId)
+        _id:mongoose.Types.ObjectId(req.body.userId)
     })
         .then((userDoc) => {
             if (!userDoc) {
