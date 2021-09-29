@@ -95,12 +95,14 @@ exports.generateOTP = (req, res, next) => {
     }
     user.findById(userId)
         .then((userData) => {
+            let expires = new Date().getTime();
+            console.log(expires);
             let otp_part1 = Math.floor(1000 + Math.random() * 9000);
             let otp_part2 = Math.floor(1000 + Math.random() * 9000);
             otp = otp_part1 * 10000 + otp_part2;
             userData.otp = {
                 value: otp,
-                expires: new Date().getTime() + 6000000
+                expires: expires + 6000000
             };
             return userData.save();
         })
@@ -133,6 +135,7 @@ exports.generateOTP = (req, res, next) => {
 }
 exports.verifyOTP = (req,res,next) => {
     let otp = req.body.otp;
+    console.log(otp);
     user.findOne({
         $and:[
             {
@@ -150,9 +153,7 @@ exports.verifyOTP = (req,res,next) => {
     })
     .then((userDoc) => {
         if(!userDoc){
-            return res.status(401).json({
-                msg:"invalid otp"
-            })
+            throw new Error("invalid otp");
         }
         userDoc.isverified = true;
         return userDoc.save();
@@ -162,5 +163,9 @@ exports.verifyOTP = (req,res,next) => {
             msg:"otp verified"
         })
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        return res.status(401).json({
+            msg:err
+        })
+    })
 }
